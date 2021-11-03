@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div class="title">Case Converter</div>
+    <textarea id="textBox"></textarea>
+    <div>
+        <button id="upper-case">Upper Case</button>
+        <button id="lower-case">Lower Case</button>
+        <button id="proper-case">Proper Case</button>
+        <button id="sentence-case">Sentence Case</button>
+        <button id="save-text-file">Save Text File</button>
+    </div>
+    <script>
+        // UpperCaseConverter
+        document.getElementById("upper-case").addEventListener("click", function() {
+            let words = document.querySelector('textarea').value.toUpperCase().split(' ');
+            document.querySelector('textarea').value = words.join(' ');
+        });
+
+        // LowerCaseConverter
+        document.getElementById("lower-case").addEventListener("click", function() {
+            let words = document.querySelector('textarea').value.toLowerCase().split(' ');
+            document.querySelector('textarea').value = words.join(' ');
+        });
+
+        // ProperCaseConverter
+        document.getElementById("proper-case").addEventListener("click", function() {
+            let words = document.querySelector('textarea').value.toLowerCase().split(' ');
+            let properWords = [];
+            for (let word of words) {
+                let properWord = word.charAt(0).toUpperCase().concat(word.slice(1));
+                properWords.push(properWord);
+            }
+            document.querySelector('textarea').value = properWords.join(' ');
+        });
+
+        // SentenceCaseConverter
+        document.getElementById("sentence-case").addEventListener("click", function() {
+            let sentences = document.querySelector('textarea').value.toLowerCase().split('. ');
+            let modifiedSentences = [];
+            for (let sentence of sentences) {
+                let modifiedSentence = sentence.charAt(0).toUpperCase().concat(sentence.slice(1));
+                modifiedSentences.push(modifiedSentence);
+            }
+            document.querySelector('textarea').value = modifiedSentences.join('. ');
+        });
+
+        // SaveTextFile
+        function download() {
+            let element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(document.querySelector('textarea').value));
+            element.setAttribute('download', 'text.txt');
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
+        // Start file download.
+        download("hello.txt","This is the content of my file :)");
+
+        document.getElementById('save-text-file').addEventListener('click', download);
+    </script>
+</body>
+</html>
